@@ -22,6 +22,7 @@ def root():
 
 @app.get("/health")
 def health():
+    # Health check endpoint
     return {"status": "healthy"}
 
 
@@ -29,7 +30,9 @@ def health():
 def create_document(request: DocumentRequest):
 
     try:
+        # Save document to PostgreSQL database
         document = save_document(request.content)
+        logger.info(f"Document saved with ID: {document.id}")
 
         return DocumentResponse(id=document.id, content=document.content)
 
@@ -44,8 +47,9 @@ def ask(request: QuestionRequest):
 
     logger.info(f"Question received: {request.question}")
 
+    # Generate answer using RAG pipeline
     answer = ask_gemini(request.question)
 
-    logger.info(f"Answer generated successfully")
+    logger.info("Answer generated successfully")
 
     return QuestionResponse(question=request.question, answer=answer)
