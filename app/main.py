@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from app.schemas import (
     QuestionRequest,
     DocumentRequest,
@@ -22,21 +22,21 @@ def root():
 
 @app.get("/health")
 def health():
-    return {
-        "status": "healthy"
-    }
+    return {"status": "healthy"}
 
 
 @app.post("/documents", response_model=DocumentResponse)
 def create_document(request: DocumentRequest):
 
-    logger.info(f"Saving document: {request.content}")
+    try:
+        document = save_document(request.content)
 
-    document = save_document(request.content)
+        return DocumentResponse(id=document.id, content=document.content)
 
-    logger.info(f"Document saved with ID: {document.id}")
+    except Exception as e:
+        logger.error(str(e))
 
-    return DocumentResponse(id=document.id, content=document.content)
+        raise HTTPException(status_code=500, detail="Failed to save document")
 
 
 @app.post("/ask", response_model=QuestionResponse)
