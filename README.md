@@ -4,13 +4,15 @@ A Retrieval-Augmented Generation (RAG) API built using FastAPI, PostgreSQL, Gemi
 
 ## Features
 
-* Store documents in PostgreSQL
-* Retrieve relevant documents using semantic search
-* Generate answers using Google's Gemini model
+* Document storage using PostgreSQL
+* Semantic document retrieval using Sentence Transformers
+* Context-aware answer generation using Gemini 2.5 Flash
 * REST APIs built with FastAPI
 * Request and response validation using Pydantic
 * Logging for monitoring and debugging
 * Health check endpoint
+* Automatic Swagger API documentation
+* Similarity threshold filtering to avoid irrelevant answers
 
 ## Tech Stack
 
@@ -89,6 +91,22 @@ http://localhost:8000/docs
 
 ## API Endpoints
 
+### Root Endpoint
+
+**Request**
+
+```http
+GET /
+```
+
+**Response**
+
+```json
+{
+  "message": "API is running"
+}
+```
+
 ### Health Check
 
 **Request**
@@ -155,9 +173,9 @@ POST /ask
 
 1. User submits a question.
 2. Documents are retrieved from PostgreSQL.
-3. Sentence Transformer generates embeddings.
-4. Cosine similarity finds the most relevant documents.
-5. Top matching documents are selected as context.
+3. Sentence Transformer generates embeddings for documents and the question.
+4. Cosine similarity is used to identify relevant documents.
+5. The top matching documents are selected as context.
 6. Gemini generates the final answer using the retrieved context.
 
 ## Future Improvements
@@ -165,6 +183,7 @@ POST /ask
 * Store embeddings in PostgreSQL
 * Add document chunking for large documents
 * Integrate a vector database such as FAISS or ChromaDB
+* Cache embeddings to improve performance
 * Add authentication and authorization
 * Improve retrieval ranking strategies
 
