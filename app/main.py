@@ -20,6 +20,13 @@ def root():
     return {"message": "API is running"}
 
 
+@app.get("/health")
+def health():
+    return {
+        "status": "healthy"
+    }
+
+
 @app.post("/documents", response_model=DocumentResponse)
 def create_document(request: DocumentRequest):
 
