@@ -1,4 +1,6 @@
 from fastapi import FastAPI, HTTPException
+from app.database import engine
+from app.models import Base
 from app.schemas import (
     QuestionRequest,
     DocumentRequest,
@@ -13,6 +15,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = FastAPI(title="AI Assignment API", version="1.0.0")
+
+Base.metadata.create_all(bind=engine)
 
 
 @app.get("/")
