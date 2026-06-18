@@ -1,12 +1,20 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class QuestionRequest(BaseModel):
-    question: str
+    question: str = Field(
+        ...,
+        description="Question to ask the knowledge base",
+        example="What are the benefits of PostgreSQL?",
+    )
 
 
 class DocumentRequest(BaseModel):
-    content: str
+    content: str = Field(
+        ...,
+        description="Document content to store",
+        example="PostgreSQL is an open-source relational database.",
+    )
 
 
 class DocumentResponse(BaseModel):
