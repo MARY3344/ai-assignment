@@ -43,7 +43,7 @@ A Retrieval-Augmented Generation (RAG) API built using FastAPI, PostgreSQL, Gemi
 ### Clone Repository
 
 ```bash
-git clone <your-github-repository-url>
+git clone https://github.com/MARY3344/ai-assignment.git
 cd ai-assignment
 ```
 
