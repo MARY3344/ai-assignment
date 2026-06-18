@@ -5,7 +5,7 @@ class QuestionRequest(BaseModel):
     question: str = Field(
         ...,
         description="Question to ask the knowledge base",
-        example="What are the benefits of PostgreSQL?",
+        example="What is PostgreSQL?",
     )
 
 
